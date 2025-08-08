@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; form-action https://formspree.io;">
 
   <meta http-equiv="X-Frame-Options" content="DENY">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
@@ -18,7 +18,8 @@
       background-color: #f0f2f5;
       color: #333;
       text-align: center;
-      padding: 40px 0;
+      padding: 40px;
+      margin: 0;
     }
 
     .container {
@@ -35,32 +36,97 @@
       margin-bottom: 15px;
     }
 
+    h2 {
+      margin-top: 40px;
+      color: #333;
+    }
+
     p {
       font-size: 1.1em;
+      line-height: 1.6;
       margin-bottom: 25px;
     }
 
     #countdown {
       font-size: 2.5em;
       font-weight: bold;
-      color: #d9534f;
+      color: #007bff;
+      /* Mudei a cor para azul, pois "Já disponível" é uma notícia positiva */
       margin-bottom: 30px;
+      display: none;
+      /* Escondido por padrão, o script decidirá se mostra */
     }
 
-    /* O estilo para o container do vídeo ainda funciona bem com a tag <video> */
     .video-container {
       position: relative;
       background: #000;
       border-radius: 8px;
       max-width: 100%;
       overflow: hidden;
+      margin-top: 20px;
     }
 
     .video-container video {
       display: block;
-      /* Remove espaço extra abaixo do vídeo */
       width: 100%;
       height: auto;
+    }
+
+    /* --- ESTILOS PARA A SEÇÃO DE CONTATO --- */
+    .contact-form {
+      margin-top: 30px;
+      text-align: left;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+      box-sizing: border-box;
+      /* Garante que o padding não aumente a largura total */
+    }
+
+    /* Estilo específico para o input de arquivo para melhor aparência */
+    .form-group input[type="file"] {
+      padding: 10px;
+      background-color: #f8f9fa;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background-color: #0056b3;
     }
   </style>
 </head>
@@ -70,6 +136,9 @@
   <div class="container">
     <h1>Sejam bem-vindos ao nosso novo portal de dados.</h1>
     <p>Aqui você consegue encontrar os melhores insights para a tomada de decisão no dia-a-dia.</p>
+
+    <div id="countdown"></div>
+
     <p>Veja abaixo as principais mudanças implementadas.</p>
 
     <div class="video-container">
@@ -78,30 +147,80 @@
         Seu navegador não suporta o elemento de vídeo.
       </video>
     </div>
+
+    <div class="contact-section">
+      <h2>Tem alguma sugestão ou comentário?</h2>
+      <p>Adoramos ouvir sua opinião! Envie sua mensagem diretamente para nossa equipe.</p>
+      <p>Se desejar, envie um e-mail para o responsável da área de Business Intelligence - nilton.filho@infracommerce.com.br
+      </p>
+
+      <form class="contact-form" action="https://formspree.io/f/mzzvkwkk" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="name">Seu nome:</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="company">Nome da empresa:</label>
+          <input type="text" id="company" name="company">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Seu e-mail:</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Sua Sugestão ou Comentário:</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="attachment">Anexo (opcional):</label>
+          <input type="file" id="attachment" name="attachment" accept="image/*,.csv,.xlsx">
+        </div>
+
+        <button type="submit" class="submit-btn">Enviar Mensagem</button>
+      </form>
+    </div>
   </div>
 
   <script>
     const launchDate = new Date("2025-08-05T23:59:59").getTime();
     const countdownElement = document.getElementById("countdown");
 
-    const countdownFunction = setInterval(function () {
+    if (countdownElement) { // Verifica se o elemento existe antes de usá-lo
       const now = new Date().getTime();
       const distance = launchDate - now;
 
-      if (distance < 0) {
-        clearInterval(countdownFunction);
-        countdownElement.innerHTML = "Lançado!";
-        document.querySelector(".container p:nth-of-type(2)").innerHTML = "O nosso novo serviço já está disponível!";
-        return;
+      // A data atual (8 de Agosto) é posterior à data de lançamento (5 de Agosto)
+      // Portanto, o script irá diretamente para o bloco 'else'
+      if (distance > 0) {
+        countdownElement.style.display = 'block'; // Mostra o elemento
+
+        const countdownFunction = setInterval(function () {
+          const nowInterval = new Date().getTime();
+          const distanceInterval = launchDate - nowInterval;
+
+          if (distanceInterval < 0) {
+            clearInterval(countdownFunction);
+            countdownElement.innerHTML = ;
+            return;
+          }
+
+          const days = Math.floor(distanceInterval / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((distanceInterval % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((distanceInterval % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((distanceInterval % (1000 * 60)) / 1000);
+
+          countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }, 1000);
+      } else {
+        // Se já foi lançado, mostra a mensagem "Já disponível!"
+        countdownElement.style.display = 'block';
+        countdownElement.innerHTML = "Já disponível!";
       }
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-    }, 1000);
+    }
   </script>
 </body>
 
