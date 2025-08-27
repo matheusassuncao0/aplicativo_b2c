@@ -2,227 +2,360 @@
 <html lang="pt-BR">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; form-action https://formspree.io;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; form-action https://formspree.io;">
 
-  <meta http-equiv="X-Frame-Options" content="DENY">
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
 
-  <title>Lançamento infra.data</title>
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f0f2f5;
-      color: #333;
-      text-align: center;
-      padding: 40px;
-      margin: 0;
-    }
+    <title>Lançamento infra.data</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            text-align: center;
+            padding: 40px;
+            margin: 0;
+        }
 
-    .container {
-      background-color: #ffffff;
-      padding: 40px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      max-width: 800px;
-      margin: 0 auto;
-    }
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
 
-    h1 {
-      color: #333;
-      margin-bottom: 15px;
-    }
+        h1 {
+            color: #333;
+            margin-bottom: 15px;
+        }
 
-    h2 {
-      margin-top: 40px;
-      color: #333;
-    }
+        h2 {
+            margin-top: 40px;
+            color: #333;
+        }
 
-    p {
-      font-size: 1.1em;
-      line-height: 1.6;
-      margin-bottom: 25px;
-    }
+        p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
 
-    #countdown {
-      font-size: 2.5em;
-      font-weight: bold;
-      color: #007bff;
-      /* Mudei a cor para azul, pois "Já disponível" é uma notícia positiva */
-      margin-bottom: 30px;
-      display: none;
-      /* Escondido por padrão, o script decidirá se mostra */
-    }
+        #countdown {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 30px;
+            display: none;
+        }
 
-    .video-container {
-      position: relative;
-      background: #000;
-      border-radius: 8px;
-      max-width: 100%;
-      overflow: hidden;
-      margin-top: 20px;
-    }
+        .video-container {
+            position: relative;
+            background: #000;
+            border-radius: 8px;
+            max-width: 100%;
+            overflow: hidden;
+            margin-top: 20px;
+        }
 
-    .video-container video {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
+        .video-container video {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
 
-    /* --- ESTILOS PARA A SEÇÃO DE CONTATO --- */
-    .contact-form {
-      margin-top: 30px;
-      text-align: left;
-    }
+        /* --- ESTILOS PARA A SEÇÃO DE CONTATO --- */
+        .contact-form {
+            margin-top: 30px;
+            text-align: left;
+        }
 
-    .form-group {
-      margin-bottom: 20px;
-    }
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-    .form-group label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: bold;
-      color: #555;
-    }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
 
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 1em;
-      box-sizing: border-box;
-      /* Garante que o padding não aumente a largura total */
-    }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
 
-    /* Estilo específico para o input de arquivo para melhor aparência */
-    .form-group input[type="file"] {
-      padding: 10px;
-      background-color: #f8f9fa;
-    }
+        .form-group input[type="file"] {
+            padding: 10px;
+            background-color: #f8f9fa;
+        }
 
-    .form-group textarea {
-      resize: vertical;
-      min-height: 120px;
-    }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
 
-    .submit-btn {
-      display: block;
-      width: 100%;
-      padding: 15px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 1.1em;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-    .submit-btn:hover {
-      background-color: #0056b3;
-    }
-  </style>
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* --- NOVOS ESTILOS PARA O MODAL DE AVISO --- */
+        .hidden {
+            display: none !important;
+        }
+
+        #welcome-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(10, 10, 10, 0.75);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            z-index: 100;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .modal-content h2 {
+            color: #333;
+            /* Vermelho */
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content .text-content {
+            color: #374151;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .modal-content .text-content p {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content .highlight-box {
+            background-color: #f3f4f6;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            margin: 1.5rem 0;
+        }
+
+        .modal-content .highlight-box p {
+            margin: 0;
+        }
+
+        .modal-content ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            text-align: left;
+            margin-top: 0.5rem;
+        }
+
+        #close-welcome-modal-btn {
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            padding: 0.8rem 0;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        #close-welcome-modal-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 
 <body>
 
-  <div class="container">
-    <h1>Sejam bem-vindos ao nosso novo portal de dados.</h1>
-    <p>Aqui você consegue encontrar os melhores insights para a tomada de decisão no dia-a-dia.</p>
+    <div id="welcome-modal">
+        <div class="modal-content">
+            <h2>ATENÇÃO: INSTABILIDADE NOS DADOS</h2>
 
-    <div id="countdown"></div>
+            <div class="text-content">
+                <p>Prezados clientes,</p>
+                <p>Estamos com instabilidade na atualização dos dados do ERP.</p>
 
-    <p>Veja abaixo as principais mudanças implementadas.</p>
+                <div class="highlight-box">
+                    <p>Estamos trabalhando para atualização ocorrer o mais rápido possível.
+                        </strong></p>
+                </div>
 
-    <div class="video-container">
-      <video controls>
-        <source src="video_explicativo.mp4" type="video/mp4">
-        Seu navegador não suporta o elemento de vídeo.
-      </video>
+                <div>
+                    <p style="font-weight: bold;">Relatórios impactados:</p>
+                    <ul>
+                        <li>Dados de vendas (Interno)</li>
+                        <li>OTD</li>
+                        <li>Relatórios criados a partir dos dados de vendas (Curva ABC, RFV)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <button id="close-welcome-modal-btn">Entendi! Começar a Navegar</button>
+        </div>
     </div>
 
-    <div class="contact-section">
-      <h2>Tem alguma sugestão ou comentário?</h2>
-      <p>Adoramos ouvir sua opinião! Envie sua mensagem diretamente para nossa equipe.</p>
-      <p>Se desejar, envie um e-mail para o responsável da área de Business Intelligence - nilton.filho@infracommerce.com.br
-      </p>
+    <div id="main-content" class="hidden">
+        <div class="container">
+            <h1>Sejam bem-vindos ao nosso novo portal de dados.</h1>
+            <p>Aqui você consegue encontrar os melhores insights para a tomada de decisão no dia-a-dia.</p>
 
-      <form class="contact-form" action="https://formspree.io/f/mzzvkwkk" method="POST" enctype="multipart/form-data">
-        <div class="form-group">
-          <label for="name">Seu nome:</label>
-          <input type="text" id="name" name="name" required>
+            <div id="countdown"></div>
+
+            <p>Veja abaixo as principais mudanças implementadas.</p>
+
+            <div class="video-container">
+                <video controls>
+                    <source src="video_explicativo.mp4" type="video/mp4">
+                    Seu navegador não suporta o elemento de vídeo.
+                </video>
+            </div>
+
+            <div class="contact-section">
+                <h2>Tem alguma sugestão ou comentário?</h2>
+                <p>Adoramos ouvir sua opinião! Envie sua mensagem diretamente para nossa equipe.</p>
+                <p>Se desejar, envie um e-mail para o responsável da área de Business Intelligence - nilton.filho@infracommerce.com.br</p>
+
+                <form class="contact-form" action="https://formspree.io/f/mzzvkwkk" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="name">Seu nome:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company">Nome da empresa:</label>
+                        <input type="text" id="company" name="company">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Seu e-mail:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Sua sugestão ou comentário:</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="attachment">Anexo (opcional):</label>
+                        <input type="file" id="attachment" name="attachment" accept="image/*,.csv,.xlsx">
+                    </div>
+
+                    <button type="submit" class="submit-btn">Enviar Mensagem</button>
+                </form>
+            </div>
         </div>
-
-        <div class="form-group">
-          <label for="company">Nome da empresa:</label>
-          <input type="text" id="company" name="company">
-        </div>
-
-        <div class="form-group">
-          <label for="email">Seu e-mail:</label>
-          <input type="email" id="email" name="email" required>
-        </div>
-
-        <div class="form-group">
-          <label for="message">Sua sugestão ou comentário:</label>
-          <textarea id="message" name="message" required></textarea>
-        </div>
-
-        <div class="form-group">
-          <label for="attachment">Anexo (opcional):</label>
-          <input type="file" id="attachment" name="attachment" accept="image/*,.csv,.xlsx">
-        </div>
-
-        <button type="submit" class="submit-btn">Enviar Mensagem</button>
-      </form>
     </div>
-  </div>
 
-  <script>
-    const launchDate = new Date("2025-08-05T23:59:59").getTime();
-    const countdownElement = document.getElementById("countdown");
+    <script>
+        // --- LÓGICA DO MODAL DE AVISO ---
+        const welcomeModal = document.getElementById('welcome-modal');
+        const closeWelcomeModalBtn = document.getElementById('close-welcome-modal-btn');
+        const mainContent = document.getElementById('main-content');
 
-    if (countdownElement) { // Verifica se o elemento existe antes de usá-lo
-      const now = new Date().getTime();
-      const distance = launchDate - now;
+        // Garante que o modal esteja visível e o conteúdo principal oculto ao carregar
+        document.addEventListener('DOMContentLoaded', () => {
+            if (welcomeModal && mainContent) {
+                welcomeModal.classList.remove('hidden');
+                mainContent.classList.add('hidden');
+            }
+        });
 
-      // A data atual (8 de Agosto) é posterior à data de lançamento (5 de Agosto)
-      // Portanto, o script irá diretamente para o bloco 'else'
-      if (distance > 0) {
-        countdownElement.style.display = 'block'; // Mostra o elemento
+        // Adiciona o evento para fechar o modal e mostrar o conteúdo
+        if (closeWelcomeModalBtn) {
+            closeWelcomeModalBtn.addEventListener('click', () => {
+                welcomeModal.classList.add('hidden');
+                mainContent.classList.remove('hidden');
+            });
+        }
 
-        const countdownFunction = setInterval(function () {
-          const nowInterval = new Date().getTime();
-          const distanceInterval = launchDate - nowInterval;
 
-          if (distanceInterval < 0) {
-            clearInterval(countdownFunction);
-            countdownElement.innerHTML = ;
-            return;
-          }
+        // --- LÓGICA EXISTENTE DO COUNTDOWN ---
+        const launchDate = new Date("2025-08-05T23:59:59").getTime();
+        const countdownElement = document.getElementById("countdown");
 
-          const days = Math.floor(distanceInterval / (1000 * 60 * 60 * 24));
-          const hours = Math.floor((distanceInterval % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          const minutes = Math.floor((distanceInterval % (1000 * 60 * 60)) / (1000 * 60));
-          const seconds = Math.floor((distanceInterval % (1000 * 60)) / 1000);
+        if (countdownElement) { // Verifica se o elemento existe antes de usá-lo
+            const now = new Date().getTime();
+            const distance = launchDate - now;
 
-          countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-        }, 1000);
-      } else {
-        // Se já foi lançado, mostra a mensagem "Já disponível!"
-        countdownElement.style.display = 'block';
-        countdownElement.innerHTML = "Já disponível!";
-      }
-    }
-  </script>
+            // A data de hoje (27 de Agosto de 2025) é posterior à data de lançamento (5 de Agosto de 2025)
+            // Portanto, o script irá diretamente para o bloco 'else'
+            if (distance > 0) {
+                countdownElement.style.display = 'block'; // Mostra o elemento
+
+                const countdownFunction = setInterval(function () {
+                    const nowInterval = new Date().getTime();
+                    const distanceInterval = launchDate - nowInterval;
+
+                    if (distanceInterval < 0) {
+                        clearInterval(countdownFunction);
+                        countdownElement.innerHTML = "Já disponível!";
+                        return;
+                    }
+
+                    const days = Math.floor(distanceInterval / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distanceInterval % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distanceInterval % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distanceInterval % (1000 * 60)) / 1000);
+
+                    countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                }, 1000);
+            } else {
+                // Se já foi lançado, mostra a mensagem "Já disponível!"
+                countdownElement.style.display = 'block';
+                countdownElement.innerHTML = "Já disponível!";
+            }
+        }
+    </script>
 </body>
 
 </html>
-
