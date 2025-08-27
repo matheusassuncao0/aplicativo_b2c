@@ -336,11 +336,7 @@
                     const nowInterval = new Date().getTime();
                     const distanceInterval = launchDate - nowInterval;
 
-                    if (distanceInterval < 0) {
-                        clearInterval(countdownFunction);
-                        countdownElement.innerHTML = "Já disponível!";
-                        return;
-                    }
+           
 
                     const days = Math.floor(distanceInterval / (1000 * 60 * 60 * 24));
                     const hours = Math.floor((distanceInterval % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -352,10 +348,11 @@
             } else {
                 // Se já foi lançado, mostra a mensagem "Já disponível!"
                 countdownElement.style.display = 'block';
-                countdownElement.innerHTML = "Já disponível!";
+              
             }
         }
     </script>
 </body>
 
 </html>
+
