@@ -218,25 +218,13 @@
 
     <div id="welcome-modal">
         <div class="modal-content">
-            <h2>ATENÇÃO: INSTABILIDADE NOS DADOS</h2>
+            <h2>ATENÇÃO: Dados normalizados e relatórios atualizados</h2>
 
             <div class="text-content">
                 <p>Prezados clientes,</p>
-                <p>Estamos com instabilidade na atualização dos dados do ERP.</p>
+                <p>Todos os realtórios afetados já foram devidamente atualizados, pedimos desculpas pelo transtorno.</p>
 
-                <div class="highlight-box">
-                    <p>Estamos trabalhando para atualização ocorrer o mais rápido possível.
-                        </strong></p>
-                </div>
 
-                <div>
-                    <p style="font-weight: bold;">Relatórios impactados:</p>
-                    <ul>
-                        <li>Dados de vendas (Interno)</li>
-                        <li>OTD</li>
-                        <li>Relatórios criados a partir dos dados de vendas (Curva ABC, RFV)</li>
-                    </ul>
-                </div>
             </div>
 
             <button id="close-welcome-modal-btn">Entendi! Começar a Navegar</button>
@@ -336,7 +324,7 @@
                     const nowInterval = new Date().getTime();
                     const distanceInterval = launchDate - nowInterval;
 
-           
+
 
                     const days = Math.floor(distanceInterval / (1000 * 60 * 60 * 24));
                     const hours = Math.floor((distanceInterval % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -348,11 +336,10 @@
             } else {
                 // Se já foi lançado, mostra a mensagem "Já disponível!"
                 countdownElement.style.display = 'block';
-              
+
             }
         }
     </script>
 </body>
 
 </html>
-
